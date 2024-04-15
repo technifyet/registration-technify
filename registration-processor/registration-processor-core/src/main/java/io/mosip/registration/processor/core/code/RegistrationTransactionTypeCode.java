@@ -23,6 +23,9 @@ public enum RegistrationTransactionTypeCode {
 	DEMOGRAPHIC_VERIFICATION,
 	/** The manual varification. */
 	MANUAL_VERIFICATION,
+
+	/** The data varification. */
+	DATA_VERIFICATION,
 	/** The biographic verification. */
 	BIOGRAPHIC_VERIFICATION,
 	/** The uin generator. */

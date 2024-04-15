@@ -139,10 +139,20 @@ public enum StatusUtil {
 			"Potential Demo Match was Found and Biometric record validation failed.Hence packet success"),
 	
 	// Manual verification stage
-	MANUAL_VERIFIER_APPROVED_PACKET(StatusConstants.MANUAL_VERIFICATION_MODULE_SUCCESS + "001", "Match Not Found by Manual Verifier"), 
+	MANUAL_VERIFIER_APPROVED_PACKET(StatusConstants.MANUAL_VERIFICATION_MODULE_SUCCESS + "001", "Match Not Found by Manual Verifier"),
 	MANUAL_VERIFIER_REJECTED_PACKET(StatusConstants.MANUAL_VERIFICATION_MODULE_FAILED + "002", "Match Found by Manual Verifier"),
 	RPR_MANUAL_VERIFICATION_RESEND(StatusConstants.MANUAL_VERIFICATION_MODULE_FAILED + "003", "Error in manual verification"),
 	RPR_MANUAL_VERIFICATION_SENT_TO_QUEUE(StatusConstants.MANUAL_VERIFICATION_MODULE_FAILED + "004", "Manual verification Sent to queue"),
+
+
+	//data verification
+
+	DATA_VERIFIER_APPROVED_PACKET(StatusConstants.DATA_VERIFICATION_MODULE_SUCCESS + "001", "Data Mistmatch Not Found by  Verifier"),
+	DATA_VERIFIER_REJECTED_PACKET(StatusConstants.DATA_VERIFICATION_MODULE_FAILED + "002", "Data Mistmatch Found by  Verifier"),
+	RPR_DATA_VERIFICATION_RESEND(StatusConstants.DATA_VERIFICATION_MODULE_FAILED + "003", "Error in data verification"),
+	RPR_DATA_VERIFICATION_SENT_TO_QUEUE(StatusConstants.DATA_VERIFICATION_MODULE_FAILED + "004", "Data verification Sent to queue"),
+
+
 	// Uin generator stage
 	UIN_GENERATED_SUCCESS(StatusConstants.UIN_GENERATOR_MODULE_SUCCESS + "001","UIN Generated Successfully"), 
 	UIN_DATA_UPDATION_SUCCESS(StatusConstants.UIN_GENERATOR_MODULE_SUCCESS + "002","UIN Data is Updated Successfully"),

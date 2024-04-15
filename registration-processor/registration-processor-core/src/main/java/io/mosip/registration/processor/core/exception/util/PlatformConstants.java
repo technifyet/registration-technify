@@ -53,6 +53,9 @@ public final class PlatformConstants {
 
 	/** The Constant RPR_MANUAL_VERIFICATION_MODULE. */
 	public static final String RPR_MANUAL_VERIFICATION_MODULE = RPR_REGISTRATION_PROCESSOR_PREFIX + "MVS-";
+       /** The Constant RPR_DATA_VERIFICATION_MODULE. */
+	   public static final String RPR_DATA_VERIFICATION_MODULE = RPR_REGISTRATION_PROCESSOR_PREFIX + "DVS-";
+
 
 	/** The Constant RPR_REST_CLIENT_MODULE. */
 	public static final String RPR_REST_CLIENT_MODULE = RPR_REGISTRATION_PROCESSOR_PREFIX + "RCT-";

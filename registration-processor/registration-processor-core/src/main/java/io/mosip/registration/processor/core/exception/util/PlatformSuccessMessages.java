@@ -110,6 +110,16 @@ public enum PlatformSuccessMessages {
 	RPR_MANUAL_VERIFICATION_SENT(PlatformConstants.RPR_MANUAL_VERIFICATION_MODULE + "001",
 			"Manual verification Sent to queue"),
 
+
+	RPR_DATA_VERIFICATION_APPROVED(PlatformConstants.RPR_DATA_VERIFICATION_MODULE + "000",
+			"Data verification approved"),
+
+	RPR_DATA_VERIFICATION_RESEND(PlatformConstants.RPR_DATA_VERIFICATION_MODULE + "002",
+			"Data verification resend"),
+
+	RPR_DATA_VERIFICATION_SENT(PlatformConstants.RPR_DATA_VERIFICATION_MODULE + "001",
+			"Data verification Sent to queue"),
+
 	RPR_DECRYPTION_SUCCESS(PlatformConstants.RPR_PACKET_DECRYPTION_MODULE + "000", "Decryption success"),
 	
 	RPR_ENCRYPTION_SUCCESS(PlatformConstants.RPR_PACKET_DECRYPTION_MODULE + "000", "Encryption success"),

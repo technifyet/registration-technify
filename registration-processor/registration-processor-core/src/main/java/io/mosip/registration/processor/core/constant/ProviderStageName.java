@@ -11,9 +11,12 @@ public enum  ProviderStageName {
     CLASSIFICATION("classification"),
     BIO_DEDUPE("classifier"),
     BIO_AUTH("bioauth"),
+    DATA_VERIFICATION("dataverification"),
+
     MANUAL_VERIFICATION("manualverification"),
     UIN_GENERATOR("uingenerator"),
     MESSAGE_SENDER("messagesender");
+
 
     private String value;
 

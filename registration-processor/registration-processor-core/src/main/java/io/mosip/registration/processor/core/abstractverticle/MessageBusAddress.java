@@ -135,6 +135,12 @@ public class MessageBusAddress implements Serializable {
 	public static final MessageBusAddress MANUAL_VERIFICATION_BUS_IN = new MessageBusAddress("manual-verification-bus-in");
 
 
+	//FIXME: data verification bus
+	/** The Constant DATA_VERIFICATION_BUS. */
+        public static final MessageBusAddress DATA_VERIFICATION_BUS_OUT = new MessageBusAddress("data-verification-bus-out");
+        public static final MessageBusAddress DATA_VERIFICATION_BUS_IN = new MessageBusAddress("data-verification-bus-in");
+
+
 	/** The Constant UIN_GENERATION_BUS_IN. */
 	public static final MessageBusAddress UIN_GENERATION_BUS_IN = new MessageBusAddress("uin-generator-bus-in");
 

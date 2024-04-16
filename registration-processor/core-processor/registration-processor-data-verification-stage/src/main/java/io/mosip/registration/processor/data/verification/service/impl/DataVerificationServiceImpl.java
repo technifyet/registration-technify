@@ -572,9 +572,11 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 		MessageDTO messageDTO = new MessageDTO();
 		messageDTO.setInternalError(false);
 		messageDTO.setIsValid(false);
+		messageDTO.setRid(regId);
+
 		if(regId == null){
-			messageDTO.setMessageBusAddress(MessageBusAddress.DATA_VERIFICATION_BUS_OUT);
-			dataVerificationStage.sendMessage(messageDTO);
+			regProcLogger.debug(LoggerFileConstant.SESSIONID.toString(), LoggerFileConstant.REGISTRATIONID.toString(),
+					regId, "REG ID is null. ::This should not happen ...DataVerificationServiceImpl::updatePacketStatus()::Error");
 			return false;
 		}
 		//

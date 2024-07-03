@@ -188,16 +188,16 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 			String mappingJsonString = Utilities.getJson(configServerFileStorageURL, dvPolicyJson);
 			mappingJsonObject = objMapper.readValue(mappingJsonString, JSONObject.class);
 
-			System.out.printf("mapping json object:::"+mappingJsonObject.toJSONString());
+			//System.out.printf("mapping json object:::"+mappingJsonObject.toJSONString());
 		}
 
 		JSONObject dvPolicyObject =  JsonUtil.getJSONObject(mappingJsonObject, "policy");
-		System.out.printf("dvPolicyObject:::"+dvPolicyObject);
+		//System.out.printf("dvPolicyObject:::"+dvPolicyObject);
 
 
 		org.json.simple.JSONArray center =  JsonUtil.getJSONArray(dvPolicyObject, "center");
 
-		System.out.printf("center  policy::::"+center);
+		//System.out.printf("center  policy::::"+center);
 		List <String> center_list =  new ArrayList<>();;
 		for (int i = 0; i < center.size(); i++) {
             center_list.add((String) center.get(i));
@@ -214,7 +214,7 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 		if(rid != null){
 			String center_id = rid.substring(0, 5);
 
-			System.out.printf("center: "+center_id);
+			//System.out.printf("center: "+center_id);
 
 			DataVerificationPolicyDTO policy = getSamplePolicy() ;
 
@@ -226,7 +226,7 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 			//String[] filter_list = filter.split(",");
 
 			for (String c : center_list) {
-				System.out.printf("c: \n"+c);
+				//System.out.printf("c: "+c+" center: "+center_id+"\n");
 				if(c.equalsIgnoreCase(center_id)){
 					return true;
 				}
@@ -264,6 +264,7 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 					.getRegistrationStatus(object.getRid());
 			if(needToVerify){
 				if(d.isEmpty()){
+					System.out.printf(":::NEW REECORD:::"+registrationId);
 					// Insert entry
 					saveDataVerificationData(registrationId, requestId);
 					pushRequestToQueue(object.getRid(), requestId, queue);
@@ -273,7 +274,9 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 					registrationStatusDto
 							.setLatestTransactionStatusCode(RegistrationTransactionStatusCode.IN_PROGRESS.toString());
 
-				}else  if(!d.get(0).getStatusCode().equalsIgnoreCase("APPROVED") || !d.get(0).getStatusCode().equalsIgnoreCase("REJECTED")){
+				}else  if(!d.get(0).getStatusCode().equalsIgnoreCase("APPROVED") && !d.get(0).getStatusCode().equalsIgnoreCase("REJECTED")){
+					System.out.printf(":::VERIFICATION INPROGRESS NEED TO RESEND TO DV SERVER:::"+d.get(0).getStatusCode());
+
 					// Insert entry
 					// Send to DV service via activeMQ.
 					/*
@@ -292,8 +295,31 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 					object.setIsValid(isTransactionSuccessful);
 					object.setMessageBusAddress(MessageBusAddress.DATA_VERIFICATION_BUS_OUT);
 					dataVerificationStage.sendMessage(object);
+					if(d.get(0).getStatusCode().equalsIgnoreCase("APPROVED")){
+						System.out.printf(":::Status :::"+d.get(0).getStatusCode());
+
+						registrationStatusDto.setStatusComment(StatusUtil.RPR_DATA_VERIFICATION_FORWARDED.getMessage());
+						registrationStatusDto.setSubStatusCode(StatusUtil.RPR_DATA_VERIFICATION_FORWARDED.getCode());
+						registrationStatusDto.setStatusCode(RegistrationStatusCode.PROCESSING.toString());
+						registrationStatusDto
+						.setLatestTransactionStatusCode(RegistrationTransactionStatusCode.SUCCESS.toString());
+					} else {
+						System.out.printf(":::Status :::"+d.get(0).getStatusCode());
+						registrationStatusDto.setStatusCode(RegistrationStatusCode.REJECTED.toString());
+						registrationStatusDto.setStatusComment(StatusUtil.DATA_VERIFIER_REJECTED_PACKET.getMessage());
+						registrationStatusDto.setSubStatusCode(StatusUtil.DATA_VERIFIER_REJECTED_PACKET.getCode());
+						registrationStatusDto
+								.setLatestTransactionStatusCode(RegistrationTransactionStatusCode.FAILED.toString());
+					}
+
 				}
 			} else {
+				System.out.printf(":::::POLICY NOT SET FOR THIS PACKET:::;");
+				registrationStatusDto.setStatusComment(StatusUtil.RPR_DATA_VERIFICATION_FORWARDED.getMessage());
+				registrationStatusDto.setSubStatusCode(StatusUtil.RPR_DATA_VERIFICATION_FORWARDED.getCode());
+				registrationStatusDto.setStatusCode(RegistrationStatusCode.PROCESSING.toString());
+				registrationStatusDto
+						.setLatestTransactionStatusCode(RegistrationTransactionStatusCode.SUCCESS.toString());
 				object.setIsValid(true);
 				object.setMessageBusAddress(MessageBusAddress.DATA_VERIFICATION_BUS_OUT);
 				dataVerificationStage.sendMessage(object);
@@ -426,7 +452,7 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 		for (Map.Entry<String, String> entry : policyMap.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue();
-			System.out.println(key + ": " + value);
+			//System.out.println(key + ": " + value);
 		}
 		return policyMap;
 
@@ -452,12 +478,12 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 		// set documents
 		JSONObject docJson = utility.getRegistrationProcessorMappingJson(MappingJsonConstants.DOCUMENT);
 
-		System.out.println("docJson"+docJson.toJSONString());
+		//System.out.println("docJson"+docJson.toJSONString());
 		for (Object doc : docJson.keySet()) {
 			if (doc != null) {
 				HashMap docmap = (HashMap) docJson.get(doc.toString());
 				String docName = docmap != null && docmap.get(MappingJsonConstants.VALUE)!= null ? docmap.get(MappingJsonConstants.VALUE).toString() : null;
-				System.out.println("docName: "+docName);
+				//System.out.println("docName: "+docName);
 
 				if (policyMap.containsValue(docName)) {
 
@@ -480,7 +506,7 @@ public class DataVerificationServiceImpl implements DataVerificationService {
 		// set metainfo
 		if (policyMap.containsValue(META_INFO)) {
 			requestDto.setMetaInfo(JsonUtils.javaObjectToJsonString(packetManagerService.getMetaInfo(id, process, ProviderStageName.DATA_VERIFICATION)));
-			System.out.println("Meta info::::");
+			//System.out.println("Meta info::::");
 		}
 		// set biometrics
 		JSONObject regProcessorIdentityJson = utility.getRegistrationProcessorMappingJson(MappingJsonConstants.IDENTITY);

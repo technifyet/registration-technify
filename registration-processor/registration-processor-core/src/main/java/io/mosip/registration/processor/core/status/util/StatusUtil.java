@@ -152,6 +152,7 @@ public enum StatusUtil {
 	RPR_DATA_VERIFICATION_RESEND(StatusConstants.DATA_VERIFICATION_MODULE_FAILED + "003", "Error in data verification"),
 	RPR_DATA_VERIFICATION_SENT_TO_QUEUE(StatusConstants.DATA_VERIFICATION_MODULE_FAILED + "004", "Data verification Sent to queue"),
 
+	RPR_DATA_VERIFICATION_FORWARDED(StatusConstants.DATA_VERIFICATION_MODULE_SUCCESS + "005", "Data verification: packet forwarded to next stage"),
 
 	// Uin generator stage
 	UIN_GENERATED_SUCCESS(StatusConstants.UIN_GENERATOR_MODULE_SUCCESS + "001","UIN Generated Successfully"), 
